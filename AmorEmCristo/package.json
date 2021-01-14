@@ -7,11 +7,22 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "setenv-debug": "node ./scripts/set-env.js --env debug",
+    "setenv-staging": "node ./scripts/set-env.js --env staging",
+    "setenv-release": "node ./scripts/set-env.js --env release",
+    "android:debug": "npm run setenv-debug && npm run android --variant debug",
+    "android:staging": "npm run setenv-staging && npm run android --variant staging",
+    "android:release": "npm run setenv-release && npm run android --variant release",
+    "ios:debug": "npm run setenv-debug && npm run ios --configuration Local",
+    "ios:staging": "npm run setenv-staging && npm run ios --configuration Dev",
+    "ios:release": "npm run setenv-release && npm run ios --configuration Release"
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.4"
+    "react-native": "0.63.4",
+    "react-native-status-bar-height": "^2.6.0",
+    "react-spring": "^8.0.27"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
