@@ -1,41 +1,36 @@
 /**
 * @prop {label} string
-* @prop {errorText} string
-* @prop {formatText} func
+* @prop {error} string
+* @prop {onChange} func
+* @prop {contrastMode} bool
+* @prop {helper} string
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { OutlinedTextField } from 'react-native-material-textfield';
 
+import InputField from './InputField';
 import { colors } from '../../theme';
 
-export default class TextField extends Component {
+export default function TextField(props) {
 
-  constructor(props) {
-    super(props);
-  };
-
-  fieldRef = React.createRef();
-
-  render() {
-    return (
-      <OutlinedTextField
-        label={this.props.label}
-        keyboardType='default'
-        textColor='white'
-        tintColor='white'
-        baseColor='white'
-        errorColor={colors.danger}
-        formatText={this.props.formatText}
-        error={this.props.errorText}
-        ref={this.fieldRef} />
-    );
-  };
+  return (
+		<InputField
+			contrastMode={props.contrastMode}
+			style={props.style}
+			label={props.label}
+			helper={props.helper}
+			capitalize='none'
+			autoCorrect={false}
+			onChangeText={props.onChange}
+			error={props.error} />
+  );
 };
 
 TextField.propTypes = {
-  label: PropTypes.string.isRequired,
-  errorText: PropTypes.string,
-  formatText: PropTypes.func,
-}
+  label: PropTypes.string,
+  error: PropTypes.string,
+  onChange: PropTypes.func,
+  contrastMode: PropTypes.bool,
+  helper: PropTypes.string,
+};

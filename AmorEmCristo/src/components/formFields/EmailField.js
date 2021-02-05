@@ -1,62 +1,37 @@
 /**
-* @prop {name} string <required>
 * @prop {label} string
-* @prop {errorText} string
-* @prop {onSubmit} func
+* @prop {error} string
 * @prop {onChange} func
+* @prop {contrastMode} bool
+* @prop {helper} string
 */
 
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { OutlinedTextField } from 'react-native-material-textfield';
 
+import InputField from './InputField';
 import { colors } from '../../theme';
 
-export default class InputEmail extends Component {
+export default function EmailField(props) {
 
-  constructor(props) {
-    super(props);
-  };
-
-  fieldRef = React.createRef();
-
-	onChange = (value) => {
-		this.props.onChange(this.props.name, value);
-	}
-
-  render() {
-    return (
-      <OutlinedTextField
-				name={this.props.name}
-				label={this.props.label || 'E-mail'}
-        keyboardType='email-address'
-        autoCapitalize='none'
-        autoCorrect={false}
-        enablesReturnKeyAutomatically={true}
-        onChangeText={this.onChange}
-        textColor='white'
-        tintColor='white'
-        baseColor='white'
-        errorColor={colors.danger}
-        error={this.props.errorText}
-        onBlur={this.onSubmit}
-        onSubmitEditing={this.onSubmit}
-        ref={this.fieldRef} />
-    );
-  };
+  return (
+		<InputField
+			contrastMode={props.contrastMode}
+			style={props.style}
+			label={props.label || 'E-mail'}
+			helper={props.helper}
+			keyboard='email-address'
+			capitalize='none'
+			autoCorrect={false}
+			onChangeText={props.onChange}
+			error={props.error} />
+  );
 };
 
-InputEmail.propTypes = {
-  name: PropTypes.string.required,
+EmailField.propTypes = {
   label: PropTypes.string,
-  errorText: PropTypes.string,
-  onSubmit: PropTypes.func,
+  error: PropTypes.string,
   onChange: PropTypes.func,
-}
-
-const styles = StyleSheet.create({
-  container: {},
-});
-
-InputEmail.propTypes = {};
+  contrastMode: PropTypes.bool,
+  helper: PropTypes.string,
+};

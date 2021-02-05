@@ -30,9 +30,11 @@ export default class BaseAPIService {
       .then((response) => response.json())
       .then((json) => {
         if ('error' in json) throw json.error;
+				else if ('form_errors' in json) throw json.form_errors;
         return json;
       })
       .catch((error) => {
+				console.log('error', error);
         throw error;
       });
   }

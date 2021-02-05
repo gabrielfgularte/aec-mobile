@@ -20,7 +20,7 @@ import { colors } from '../../theme';
 export default function Button(props) {
 
 	return (
-		<Ripple style={props.style} onPress={props.onPress}>
+		<Ripple disabled={props.disabled} style={props.style} onPress={props.onPress}>
 
 			<View style={[styles.container, props.disabled ? styles.disabledContainer : null]}>
 				<Text style={[styles.text, props.disabled ? styles.disabledText : null]}>

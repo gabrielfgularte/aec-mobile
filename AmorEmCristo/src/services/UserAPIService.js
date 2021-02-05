@@ -11,8 +11,12 @@ export default class UserAPIService extends BaseAPIService {
     return '/auth';
   }
 
-  static login(credentials) {
-    return UserAPIService.post('/auth/login/', credentials);
+  static login(payload) {
+    return UserAPIService.post('/auth/login/', payload);
+  }
+
+	static signUp(payload) {
+    return UserAPIService.post('/auth/signup/', payload);
   }
 
 }

@@ -1,98 +1,69 @@
 /**
-* @prop {name} string <required>
 * @prop {label} string
-* @prop {errorText} string
-* @prop {onSubmit} func
+* @prop {error} string
 * @prop {onChange} func
+* @prop {contrastMode} bool
+* @prop {helper} string
 */
 
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { OutlinedTextField } from 'react-native-material-textfield';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import InputField from './InputField';
 import { colors } from '../../theme';
 
-export default class InputPassword extends Component {
+export default function PasswordField(props) {
 
-  constructor(props) {
-    super(props);
+	[secureTextEntry, setSecureTextEntry] = useState(true);
 
-    this.state = {
-      secureTextEntry: true
-    }
+	const onAccessoryPress = () => {
+    setSecureTextEntry(!secureTextEntry);
   };
 
-  fieldRef = React.createRef();
-
-	onChange = (value) => {
-		this.props.onChange(this.props.name, value);
-	}
-
-  onAccessoryPress = () => {
-    this.setState({ secureTextEntry: !this.state.secureTextEntry });
-  }
-
-  renderHideIcon = () => {
+	const renderHideIcon = () => {
     return (
         <Icon
           size={22}
           name='eye-off'
-          color='white'
-          onPress={this.onAccessoryPress}
+          color={props.contrastMode ? 'white' : '#666666'}
+          onPress={onAccessoryPress}
           suppressHighlighting={true} />
       );
-  }
+  };
 
-  renderShowIcon = () => {
+	const renderShowIcon = () => {
     return (
         <Icon
           size={22}
           name='eye'
           color={colors.primary}
-          onPress={this.onAccessoryPress}
+          onPress={onAccessoryPress}
           suppressHighlighting={true} />
       );
-  }
-
-  render() {
-    return (
-      <View style={[styles.container, this.props.style]}>
-				<OutlinedTextField
-					name={this.props.name}
-					label={this.props.label || 'Senha'}
-					secureTextEntry={this.state.secureTextEntry}
-					autoCapitalize='none'
-					autoCorrect={false}
-					enablesReturnKeyAutomatically={true}
-					clearTextOnFocus={true}
-					textColor='white'
-					tintColor='white'
-					baseColor='white'
-					errorColor={colors.danger}
-					onSubmitEditing={this.onSubmit}
-					onChangeText={this.onChange}
-					onBlur={this.onSubmit}
-					renderRightAccessory={this.state.secureTextEntry ? this.renderHideIcon : this.renderShowIcon}
-					error={this.props.errorText}
-					ref={this.fieldRef} />
-			</View>
-    );
   };
+
+  return (
+		<InputField
+			contrastMode={props.contrastMode}
+			secureTextEntry={secureTextEntry}
+			style={props.style}
+			label={props.label || 'Senha'}
+			helper={props.helper}
+			capitalize='none'
+			autoCorrect={false}
+			onChangeText={props.onChange}
+			error={props.error}
+			icon={secureTextEntry ? renderHideIcon : renderShowIcon} />
+  );
 };
 
-InputPassword.propTypes = {
-  name: PropTypes.string.isRequired,
+PasswordField.propTypes = {
   label: PropTypes.string,
-  errorText: PropTypes.string,
-  onSubmit: PropTypes.func,
+  error: PropTypes.string,
   onChange: PropTypes.func,
-}
-
-const styles = StyleSheet.create({
-  container: {
-	},
-});
-
-InputPassword.propTypes = {};
+  contrastMode: PropTypes.bool,
+  style: PropTypes.object,
+  helper: PropTypes.string,
+};
